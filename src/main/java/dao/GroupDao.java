@@ -3,6 +3,7 @@ package dao;
 import config.Config;
 import error.NotFoundException;
 import models.Address;
+import models.Employee;
 import models.Group;
 import models.Student;
 
@@ -72,10 +73,22 @@ public class GroupDao   {
         }
     }
 
-    public boolean deleteById(String id){
-        //todo
-        return false;
+
+    public boolean deleteById(String name) {
+        Group e = findById(name);
+        String sql = "DELETE FROM groups WHERE name = ? ";
+        try (
+                Connection conn = DriverManager.getConnection(Config.DB_URL, Config.DB_USER, Config.DB_PASSWORD);
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setString(1, name);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
+
 
     public Group findById(String name){
         String sql = "SELECT * FROM `groups` where name = ? ";

@@ -8,8 +8,16 @@ import java.util.Objects;
 public class Group {
 
     private String name;
-    private List<Activity> activities;
     private List<Student> students;
+    private List<Assignement> assignements;
+
+    public List<Assignement> getAssignements() {
+        return assignements;
+    }
+
+    public void setAssignements(List<Assignement> assignements) {
+        this.assignements = assignements;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -26,14 +34,6 @@ public class Group {
 
     public String getName() {
         return name;
-    }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
     }
 
     public List<Student> getStudents() {
@@ -58,17 +58,11 @@ public class Group {
     }
 
 
-    public void addActivity(Activity activity){
-        if(activities == null) activities = new LinkedList<>();
-        activities.add(activity);
-    }
-
     @Override
     public String toString() {
         return "Group{" +
                 "name='" + name +  '\'' +
                 ", students=" + students +
-                ", activities=" + activities +
                 '}';
     }
 }

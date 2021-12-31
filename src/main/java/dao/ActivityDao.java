@@ -6,10 +6,7 @@ import models.Activity;
 import models.Employee;
 import models.Group;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,13 +42,8 @@ public class ActivityDao   {
             while ( rs.next() == true){
                 // create new empty activity entity
                 Activity a = new Activity();
-                a.setId(rs.getString(1));
+                a.setId(rs.getInt(1));
                 a.setLabel(rs.getString(2));
-                a.setGroup(new Group());
-                a.getGroup().setName(rs.getString(3));
-                a.setResponsible(new Employee());
-                a.getResponsible().setFirstName(rs.getString(2));
-
                 // then add the new created activity to the list of activities as follows:
                 result.add(a);
             }
@@ -61,21 +53,44 @@ public class ActivityDao   {
         return result;
     }
 
-    public Activity save(Activity s){
-        //todo
-        return null;
+
+    public Activity save(Activity a){
+
+        String sql = "insert into activity (label) values (?) ";
+        try (
+                Connection conn = DriverManager.getConnection(Config.DB_URL, Config.DB_USER, Config.DB_PASSWORD);
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+            stmt.setString(1, a.getLabel());
+            stmt.executeUpdate(); // execute the database insert query
+            return a;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 
 
 
-    public boolean deleteById(String id){
-        //todo
-        return false;
+
+    public boolean deleteById(int id) {
+        Activity a = findById(id);
+        String sql = "DELETE FROM activity WHERE id = ? ";
+        try (
+                Connection conn = DriverManager.getConnection(Config.DB_URL, Config.DB_USER, Config.DB_PASSWORD);
+                PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 
-    public Activity findById(String id){
+    public Activity findById(int id){
         //todo
         return null;
     }

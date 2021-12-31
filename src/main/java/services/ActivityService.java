@@ -21,7 +21,7 @@ public class ActivityService {
     ActivityDao dao = ActivityDao.getInstance();
     EmployeeService employeeService =  EmployeeService.getInstance();
 
-    public Activity getActivity(String activityId) {
+    public Activity getActivity(int activityId) {
         return dao.findById(activityId);
     }
 
@@ -30,15 +30,9 @@ public class ActivityService {
     }
 
 
-    public void deleteActivity(String id){
+    public void deleteActivity(int id){
         dao.deleteById(id);
     }
 
 
-
-    public void setResponsibleEmployee(String activityId, int employeeId){
-        Activity a = dao.findById(activityId);
-        Employee e = employeeService.getEmployee(employeeId);
-        a.setResponsible(e);
-    }
 }

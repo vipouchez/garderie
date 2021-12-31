@@ -6,11 +6,6 @@ create table address (
     city varchar(30)
 );
 
-
-
-
-
-
 create table groups(
     name varchar(30) primary key
 );
@@ -45,12 +40,18 @@ create table employee(
     foreign key(address_id) references address(id)
 );
 
-
-
 create table activity(
     id  int(6)  AUTO_INCREMENT primary key,
-    label varchar(30),
-    employee_id int(6),
-    group_id int(6),
-    foreign key(group_id) references groups(name)
+    label varchar(30)
   );
+
+create table assignements (
+    id  int(6)  AUTO_INCREMENT primary key,
+    group_id varchar(30),
+    activity_id int(6),
+    employee_id int(6),
+    foreign key(group_id) references groups(name),
+    foreign key(activity_id) references activity(id),
+    foreign key(employee_id) references employee(id)
+);
+

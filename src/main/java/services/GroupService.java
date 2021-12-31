@@ -83,10 +83,7 @@ public class GroupService {
     }
 
     public void addActivityToGroup(String activityId, String groupName){
-        Activity a = activityService.getActivity(activityId);
-        Group g = groupDao.findById(groupName);
-        g.addActivity(a);
-        groupDao.save(g);
+        // TODO
     }
 
     public void removeGroup(String id)  {
